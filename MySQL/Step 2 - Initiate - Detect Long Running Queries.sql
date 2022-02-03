@@ -43,19 +43,16 @@ CREATE TABLE `slow_log` (
    `thread_id` bigint(21) unsigned NOT NULL
   ) ENGINE=CSV DEFAULT CHARSET=utf8 COMMENT='Slow log';
   
-  
+/* Turn on detection */  
 SET global general_log = 1;
 SET global log_output = 'table';
 
-    
-SET global general_log = 0;  
-
-SHOW variables like 'long_query_time';  
+SET global slow_query_log = 1;
 SET long_query_time = 0.00001;
 
-SET global slow_query_log = 1;
-
-SHOW variables like 'min_examined_row_limit';
+/* Turn off detection */
+SET global general_log = 0;  
+SET global slow_query_log = 0;
 
   
 
