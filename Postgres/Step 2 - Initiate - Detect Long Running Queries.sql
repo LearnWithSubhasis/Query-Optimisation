@@ -1,6 +1,6 @@
 ########## SQLs ###############
 
-ALTER DATABASE tuning SET log_min_duration_statement = 1;
+ALTER DATABASE tuning SET log_min_duration_statement = 0;
 
 SELECT pg_reload_conf();
 
