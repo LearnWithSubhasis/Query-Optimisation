@@ -1,4 +1,4 @@
-	########## Bash Commands ##########
+########## Bash Commands ##########
   
   > cd /Users/subhasiskhatua/Library/Application Support/Postgres/var-14/pg_log
 	> brew install pgbadger

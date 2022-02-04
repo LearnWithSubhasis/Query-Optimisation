@@ -1,4 +1,4 @@
-	########## SQLs ###############
+########## SQLs ###############
 
 ALTER DATABASE tuning SET log_min_duration_statement = 1;
 
