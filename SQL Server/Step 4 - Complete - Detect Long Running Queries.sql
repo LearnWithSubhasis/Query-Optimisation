@@ -1,15 +1,20 @@
-/* detect all queries run in past */
 
-SELECT *, convert(argument using utf8) as query FROM mysql.general_log;	
-SELECT convert(argument using utf8) as query FROM mysql.general_log;
+SELECT TOP(50) qs.execution_count AS [Execution Count],
+(qs.total_logical_reads)*8/1024.0 AS [Total Logical Reads (MB)],
+(qs.total_logical_reads/qs.execution_count)*8/1024.0 AS [Avg Logical Reads (MB)],
+(qs.total_worker_time)/1000.0 AS [Total Worker Time (ms)],
+(qs.total_worker_time/qs.execution_count)/1000.0 AS [Avg Worker Time (ms)],
+(qs.total_elapsed_time)/1000.0 AS [Total Elapsed Time (ms)],
+(qs.total_elapsed_time/qs.execution_count)/1000.0 AS [Avg Elapsed Time (ms)],
+qs.creation_time AS [Creation Time]
+,t.text AS [Complete Query Text], qp.query_plan AS [Query Plan]
+,t.dbid
+FROM sys.dm_exec_query_stats AS qs WITH (NOLOCK)
+CROSS APPLY sys.dm_exec_sql_text(plan_handle) AS t
+CROSS APPLY sys.dm_exec_query_plan(plan_handle) AS qp
+WHERE t.dbid = DB_ID()
+ORDER BY qs.execution_count DESC OPTION (RECOMPILE);-- frequently ran query
+-- ORDER BY [Total Logical Reads (MB)] DESC OPTION (RECOMPILE);-- High Disk Reading query
+-- ORDER BY [Avg Worker Time (ms)] DESC OPTION (RECOMPILE);-- High CPU query
+-- ORDER BY [Avg Elapsed Time (ms)] DESC OPTION (RECOMPILE);-- Long Running query
 
-select distinct * from (
-    SELECT convert(argument using utf8) as query FROM mysql.general_log
-) as q1
-where q1.query like '%driver%';
-
-/* detect slow running queries */	
-select distinct * from (    
-    SELECT convert(sql_text using utf8) as query FROM mysql.slow_log 
-) as q2 
-WHERE q2.query like '%driver%';

@@ -1,0 +1,7 @@
+> Azure Data Studio: https://github.com/microsoft/azuredatastudio
+
+> Docker Image
+    § https://go.microsoft.com/fwlink/?linkid=2099216
+    § https://docs.microsoft.com/en-us/sql/linux/quickstart-install-connect-docker?view=sql-server-ver15&preserve-view=true
+
+    > sudo docker pull mcr.microsoft.com/mssql/server:2019-latest
