@@ -1,6 +1,8 @@
 use tuning;
+GO
 
-/* sample query 1 */
+-- /* sample query 1 */
+/*
 select a3.product_name, sum(a3.dist) as total_distance_travelled from
 (
 select * from
@@ -12,7 +14,7 @@ sqrt(
 from
 (
 select * from 
-(
+(*/
 with aggr1 as (
     select d.*, row_number() over (partition by d.driver_id order by recorded_at_time) as rank1 
     from driver_locations d
@@ -24,6 +26,8 @@ select p.product_name, a.*
 from aggr1 a
 inner join products p
 on a.product_type=p.product_type
+
+/*
 ) as a2
 ) a2
 where a2.driver_id = a2.next_driver_id
@@ -31,9 +35,9 @@ where a2.driver_id = a2.next_driver_id
 ) a3
 group by 1 
 order by 2 desc;
+*/
 
-
-/* sample query 2 */
+-- /* sample query 2 */
 select a.*, b.* from driver_locations a
 inner join products b
 on a.product_type = b.product_type;

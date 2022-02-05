@@ -1,17 +1,18 @@
 -- /* Create a new database schema */
-create schema tuning;
+create database tuning;
 GO
 
 -- /* Use the newly created database schema */
 use tuning;
+GO
 
 -- /* Create required tables */
 create table driver_locations (
 driver_id int, 
-driver_latitude double, 
-driver_longitude double, 
+driver_latitude float, 
+driver_longitude float, 
 country varchar(50), 
-recorded_at_time timestamp,
+recorded_at_time datetime,
 product_type char);
 
 create table products (
